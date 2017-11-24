@@ -1,0 +1,14 @@
+{
+  "name": "cloudflareupdater_v2",
+  "version": "2.0.0",
+  "description": "cludflare dynamic ip updater",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cloudflare": "^2.2.0"
+  }
+}
