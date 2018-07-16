@@ -1,4 +1,4 @@
-const jData = require('../data.json');
+const jData = require('./data.json');
 const http = require('http');
 const fs = require('fs');
 const cf = require('cloudflare')({
@@ -7,20 +7,21 @@ const cf = require('cloudflare')({
 });
 
 function updateIP(newIP) {
+  const ip = newIP.replace('\n', '');
   const newTime = new Date().toISOString();
 
-  const newBody = jData.body;
-  newBody.content = newIP.replace('\n', '');
-  newBody.modified_on = newTime;
+  for (let i = 0; i < jData.bodys.length; i++) {
+    const newBody = jData.bodys[i];
+    newBody.content = ip;
+    newBody.modified_on = newTime;
 
-  cf.dnsRecords.edit(jData.body.zone_id, jData.body.id, newBody).then(res => {
-    fs.appendFile('../log/IPChangeLog.txt', `New IP: ${newIP}\r\n`, err => {
-      if (err) console.error(err);
-    });
-    console.log(res);
-  }).catch(err => {
-    if (err) console.error(err);
-  });
+    cf.dnsRecords.edit(jData.bodys[i].zone_id, jData.bodys[i].id, newBody)
+      .then(res => {})
+      .catch(err => {
+        if (err) console.error(err);
+      });
+  }
+  console.log('updated IP addresses');
 }
 
 function getNewIP() {
