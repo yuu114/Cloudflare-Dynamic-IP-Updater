@@ -37,7 +37,6 @@ function getNewIP() {
         updateIP(parsedData);
       } catch (e) {
         console.error(e.message);
-        fs.appendFile('../log/IPChangeLog.txt', `Error: ${e.message}\r\n`);
       }
     });
   });
